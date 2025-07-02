@@ -37,3 +37,11 @@
 .movie-info {
   margin-top: 0.5rem;
 }
+.trailer-page {
+  padding: 2rem;
+  text-align: center;
+}
+.movie-card {
+  text-align: center;
+  margin: 1rem;
+}

@@ -8,7 +8,7 @@ const Navbar = ({ onSearch }) => {
 
   return (
     <nav className="navbar">
-      <div className="logo">MOVIESTAR</div>
+      <div className="logo">MOVIE|STAR</div>
       <div className="search-bar">
         <input
           type="text"
