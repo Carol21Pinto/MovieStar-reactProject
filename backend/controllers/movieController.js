@@ -21,25 +21,30 @@ const searchMovies = async (req, res) => {
   }
 };
 
-// Get trailer
+// Get trailer, title, overview, and cast
 const getMovieTrailer = async (req, res) => {
   const movieId = req.params.id;
-  if (!movieId) {
-    return res.status(400).json({ message: 'Movie ID is required' });
-  }
+  if (!movieId) return res.status(400).json({ message: 'Movie ID is required' });
 
   try {
-    const videoResponse = await axios.get(
-      `https://api.themoviedb.org/3/movie/${movieId}/videos`,
-      { params: { api_key: process.env.TMDB_API_KEY } }
-    );
-    const detailResponse = await axios.get(
-      `https://api.themoviedb.org/3/movie/${movieId}`,
-      { params: { api_key: process.env.TMDB_API_KEY } }
-    );
+    // Trailer
+    const videoRes = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/videos`, {
+      params: { api_key: process.env.TMDB_API_KEY },
+    });
 
-    const videos = videoResponse.data.results;
-    const title = detailResponse.data.title;
+    // Movie Details
+    const detailRes = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}`, {
+      params: { api_key: process.env.TMDB_API_KEY },
+    });
+
+    // Cast
+    const creditsRes = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits`, {
+      params: { api_key: process.env.TMDB_API_KEY },
+    });
+
+    const videos = videoRes.data.results;
+    const details = detailRes.data;
+    const cast = creditsRes.data.cast.slice(0, 8); // top 8 cast members
 
     const trailer = videos.find(
       (video) => video.type === 'Trailer' && video.site === 'YouTube'
@@ -48,7 +53,12 @@ const getMovieTrailer = async (req, res) => {
     if (trailer) {
       res.json({
         trailerUrl: `https://www.youtube.com/watch?v=${trailer.key}`,
-        title: title,
+        title: details.title,
+        overview: details.overview,
+        cast: cast.map(actor => ({
+          name: actor.name,
+          profile_path: actor.profile_path,
+        })),
       });
     } else {
       res.status(404).json({ message: 'Trailer not found' });
@@ -58,6 +68,7 @@ const getMovieTrailer = async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch trailer' });
   }
 };
+
 
 // Trending movies
 const getTrendingMovies = async (req, res) => {

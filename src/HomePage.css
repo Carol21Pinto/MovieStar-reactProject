@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Quicksand:wght@300..700&display=swap');
+
+.movie-info button{
+    background-color: #b9b4c7bb;
+    padding: 11px;
+    border-radius: 13px;
+    font-weight: bold;
+    width: 150px;
+}
+.movie-info button:hover{
+    background-color: #3f4f44;
+    color: whitesmoke;
+}
+.releaseDate p{
+    margin: 0px;
+}
+.TrendingName{
+    font-family: "Audiowide",sans-serif;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+.UpcomingName{
+    font-family: "Audiowide",sans-serif;
+    font-size: 30px;
+    margin-bottom: 20px;
+}

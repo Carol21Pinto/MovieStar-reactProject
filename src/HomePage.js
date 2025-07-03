@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './HomePage.css';
 
 const HomePage = ({ query, movies }) => {
   const [trending, setTrending] = useState([]);
@@ -47,18 +48,23 @@ const HomePage = ({ query, movies }) => {
 
     return movies.map((movie) => (
       <div key={movie.id} className="movie-card">
-        <img
-          src={
-            movie.poster_path
-              ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
-              : 'https://via.placeholder.com/200x300?text=No+Image'
-          }
-          alt={movie.title}
-        />
+        <div className="poster-container">
+  <img
+    src={
+      movie.poster_path
+        ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
+        : 'https://via.placeholder.com/200x300?text=No+Image'
+    }
+    alt={movie.title}
+  />
+  <div className="hover-overlay">
+    <p>📅 {movie.release_date || 'N/A'}</p>
+    <p>⭐ {movie.vote_average || 'N/A'}</p>
+  </div>
+</div>
+
         <div className="movie-info">
           <h3>{movie.title}</h3>
-          <p>Release Date: {movie.release_date || 'N/A'}</p>
-          <p>Rating: {movie.vote_average || 'N/A'}</p>
           <button onClick={() => handleWatchTrailer(movie.id)}>Watch Trailer</button>
         </div>
       </div>
@@ -76,10 +82,10 @@ const HomePage = ({ query, movies }) => {
         </>
       ) : (
         <>
-          <h2 style={{ textAlign: 'center', marginTop: '1rem' }}>🔥 Trending Movies</h2>
+          <h2 className="TrendingName" style={{ textAlign: 'center', marginTop: '1rem'}}>🔥 Trending Movies</h2>
           <div className="movie-results">{renderMovieList(trending)}</div>
 
-          <h2 style={{ textAlign: 'center', marginTop: '2rem' }}>🎬 Upcoming Movies</h2>
+          <h2 className="UpcomingName"style={{ textAlign: 'center', marginTop: '2rem' }}>🎬 Upcoming Movies</h2>
           <div className="movie-results">{renderMovieList(upcoming)}</div>
         </>
       )}

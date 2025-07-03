@@ -1,0 +1,96 @@
+.trailer-page {
+  padding: 1rem;
+  text-align: center;
+  color: #fff;
+  background-color: #121212;
+}
+.movieTitle{
+    font-size: 50px;
+    margin-top: 0px;
+}
+.overview {
+  margin-top: 2rem;
+  padding: 1rem;
+  max-width: 1300px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  background: #1e1e1e;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.267);
+    border-radius: 12px;
+}
+
+.overview p{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    color:#fff;
+}
+.overview h2{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 28px;
+    color: #fff;
+    margin-top: 1px;
+    margin-bottom: 0px;
+}
+
+.cast-section {
+  margin-top: 2rem;
+  background: #1e1e1e;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+}
+.cast-section h2{
+    margin-top: 10px;
+    font-size: 30px;
+    margin-bottom: 0px;
+
+}
+.cast-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.cast-card {
+  width: 150px;
+  text-align: center;
+}
+.cast-card:hover{
+    background-color: #fff;
+    color: black;
+    border-radius: 20px;
+    width: 160px;
+    transition: transform 0.3s ease;
+    
+}
+.cast-section .cast-grid p{
+    font-weight: bold;
+}
+.cast-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+.home-button {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  background-color: #f44336;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.home-button:hover {
+  background-color: #c12c2c;
+}
+
