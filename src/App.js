@@ -1,48 +1,55 @@
-import React, { useState } from 'react';
-import Navbar from './Navbar';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import TrailerPage from './TrailerPage';
+// App.js
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import Signup from './signup';
+import Login from './login';
 import HomePage from './HomePage';
-import './App.css';
+import TrailerPage from './TrailerPage';
+import Navbar from './Navbar'; // ✅ import
 
-function App() {
-  const [query, setQuery] = useState('');
-  const [movies, setMovies] = useState([]);
+const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
 
-  // Handle search input from Navbar
-  const handleSearch = async (value) => {
-    setQuery(value);
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setIsAuthenticated(!!localStorage.getItem('token'));
+    };
 
-    if (!value) {
-      setMovies([]);
-      return;
-    }
-
-    try {
-      const response = await fetch(`http://localhost:5000/api/movies/search?query=${value}`);
-      const data = await response.json();
-      setMovies(data.results || []);
-    } catch (error) {
-      console.error('Error fetching movies:', error);
-    }
-  };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
 
   return (
-  <Router>
-  <div className="App">
-    <Routes>
-      <Route path="/" element={
-        <>
-          <Navbar onSearch={handleSearch} />
-          <HomePage query={query} movies={movies} />
-        </>
-      } />
-      <Route path="/trailer/:id" element={<TrailerPage />} />
-    </Routes>
-  </div>
-</Router>
-
+    <Router>
+      <AppContent isAuthenticated={isAuthenticated} />
+    </Router>
   );
-}
+};
+
+const AppContent = ({ isAuthenticated }) => {
+  const location = useLocation();
+
+  // ✅ Only show Navbar on "/home"
+  const showNavbar = location.pathname === '/home';
+
+  return (
+    <>
+      {showNavbar && <Navbar />}
+      <Routes>
+        <Route
+          path="/"
+          element={!isAuthenticated ? <Navigate to="/signup" /> : <Navigate to="/home" />}
+        />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/home"
+          element={isAuthenticated ? <HomePage /> : <Navigate to="/login" />}
+        />
+        <Route path="/trailer/:id" element={<TrailerPage />} />
+      </Routes>
+    </>
+  );
+};
 
 export default App;
